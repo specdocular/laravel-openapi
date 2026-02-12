@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Config;
+use Pest\Expectation;
 use Specdocular\LaravelOpenAPI\Attributes\Collection;
 use Specdocular\LaravelOpenAPI\Builders\ComponentsBuilder\ComponentsBuilder;
 use Specdocular\OpenAPI\Schema\Objects\Components\Components;
-use Pest\Expectation;
 
 describe(class_basename(ComponentsBuilder::class), function (): void {
     beforeEach(function (): void {

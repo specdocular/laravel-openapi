@@ -1,8 +1,8 @@
 <?php
 
+use Pest\Expectation;
 use Specdocular\LaravelOpenAPI\Attributes\Collection;
 use Specdocular\LaravelOpenAPI\Support\ComponentCollector;
-use Pest\Expectation;
 
 describe(class_basename(ComponentCollector::class), function (): void {
     it('can collect specific collections', function (): void {

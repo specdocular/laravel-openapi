@@ -2,9 +2,9 @@
 
 namespace Tests\Support\Doubles\Stubs;
 
-use Specdocular\LaravelOpenAPI\Contracts\Abstract\Factories\ExtensionFactory;
 use Specdocular\JsonSchema\Draft202012\Contracts\JSONSchema;
 use Specdocular\JsonSchema\Draft202012\Formats\StringFormat;
+use Specdocular\LaravelOpenAPI\Contracts\Abstract\Factories\ExtensionFactory;
 use Specdocular\OpenAPI\Schema\Objects\Schema\Schema;
 
 class FakeExtension extends ExtensionFactory

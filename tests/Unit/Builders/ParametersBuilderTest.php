@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Specdocular\JsonSchema\Draft202012\Keywords\Type;
 use Specdocular\LaravelOpenAPI\Builders\ParametersBuilder;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
-use Specdocular\JsonSchema\Draft202012\Keywords\Type;
 use Specdocular\OpenAPI\Schema\Objects\Parameter\Parameter;
 use Tests\Support\Doubles\Stubs\Attributes\TestParametersFactory;
 use Tests\Support\Doubles\Stubs\Builders\TestController;

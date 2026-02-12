@@ -4,9 +4,9 @@ namespace Specdocular\LaravelOpenAPI\Builders;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
+use Specdocular\JsonSchema\Draft202012\Contracts\JSONSchema;
 use Specdocular\LaravelOpenAPI\Contracts\Factories\ParametersFactory;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
-use Specdocular\JsonSchema\Draft202012\Contracts\JSONSchema;
 use Specdocular\OpenAPI\Contracts\Abstract\Factories\Components\ParameterFactory;
 use Specdocular\OpenAPI\Schema\Objects\Parameter\Parameter;
 use Specdocular\OpenAPI\Schema\Objects\Schema\Schema;

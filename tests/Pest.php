@@ -23,7 +23,7 @@ expect()->extend('toBeImmutable', function (): Pest\Expectation {
     $class = new ReflectionClass($this->value);
     foreach ($class->getProperties() as $property) {
         expect($property->isReadOnly())->toBeTrue(
-            "Property {$property->getName()} is not readonly"
+            "Property {$property->getName()} is not readonly",
         );
     }
 

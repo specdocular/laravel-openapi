@@ -2,8 +2,8 @@
 
 namespace Workbench\App\Petstore\Factories\Responses;
 
-use Specdocular\LaravelOpenAPI\Contracts\Factories\ResponsesFactory;
 use Specdocular\JsonSchema\Draft202012\Keywords\Properties\Property;
+use Specdocular\LaravelOpenAPI\Contracts\Factories\ResponsesFactory;
 use Specdocular\OpenAPI\Schema\Objects\MediaType\MediaType;
 use Specdocular\OpenAPI\Schema\Objects\Response\Response;
 use Specdocular\OpenAPI\Schema\Objects\Responses\Fields\HTTPStatusCode;
