@@ -1,0 +1,6 @@
+.env
+.env.dusk
+bootstrap/cache
+storage
+vendor
+public

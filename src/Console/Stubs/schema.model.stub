@@ -1,0 +1,22 @@
+<?php
+
+namespace DummyNamespace;
+
+use Specdocular\OpenAPI\Contracts\SchemaContract;
+use Specdocular\OpenAPI\Objects\AllOf;
+use Specdocular\OpenAPI\Objects\AnyOf;
+use Specdocular\OpenAPI\Objects\Not;
+use Specdocular\OpenAPI\Objects\OneOf;
+use Specdocular\OpenAPI\Objects\Schema;
+use Vyuldashev\LaravelOpenApi\Factories\SchemaFactory;
+
+class DummyClass extends SchemaFactory
+{
+    /**
+     * @return AllOf|OneOf|AnyOf|Not|Schema
+     */
+    public function build(): SchemaContract
+    {
+        DummyDefinition
+    }
+}

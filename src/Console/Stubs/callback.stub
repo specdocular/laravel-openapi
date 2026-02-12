@@ -1,0 +1,38 @@
+<?php
+
+namespace DummyNamespace;
+
+use Specdocular\OpenAPI\Objects\MediaType;
+use Vyuldashev\LaravelOpenApi\Objects\Operation;
+use Specdocular\OpenAPI\Objects\PathItem;
+use Specdocular\OpenAPI\Objects\RequestBody;
+use Specdocular\OpenAPI\Objects\Response;
+use Specdocular\OpenAPI\Objects\Schema;
+use Vyuldashev\LaravelOpenApi\Factories\CallbackFactory;
+
+class DummyClass extends CallbackFactory
+{
+    public function build(): PathItem
+    {
+        return PathItem::create('MyEvent')
+            ->path('{$request.body#/callbackUrl}')
+            ->operations(
+                Operation::post()
+                    ->requestBody(
+                        RequestBody::create()
+                            ->description('something happened')
+                            ->content(
+                                MediaType::create()->schema(
+                                    Schema::object('object_test')
+                                        ->properties(
+                                            Schema::string('foo')
+                                        )
+                                )
+                            )
+                    )
+                    ->responses(
+                        Response::ok()->description('Your server returns this code if it accepts the callback')
+                    )
+            );
+    }
+}

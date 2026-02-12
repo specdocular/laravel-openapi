@@ -1,0 +1,39 @@
+<?php
+
+namespace Workbench\App\Petstore\Factories\Responses;
+
+use Specdocular\LaravelOpenAPI\Contracts\Factories\ResponsesFactory;
+use Specdocular\OpenAPI\Schema\Objects\MediaType\MediaType;
+use Specdocular\OpenAPI\Schema\Objects\Response\Response;
+use Specdocular\OpenAPI\Schema\Objects\Responses\Fields\HTTPStatusCode;
+use Specdocular\OpenAPI\Schema\Objects\Responses\Responses;
+use Specdocular\OpenAPI\Schema\Objects\Responses\Support\ResponseEntry;
+use Specdocular\OpenAPI\Support\SharedFields\Content\ContentEntry;
+use Workbench\App\Petstore\Reusable\Response\ValidationErrorResponse;
+use Workbench\App\Petstore\Reusable\Schema\PetSchema;
+
+class MultiResponseMixedWithReusable implements ResponsesFactory
+{
+    public function build(): Responses
+    {
+        return Responses::create(
+            ResponseEntry::create(
+                HTTPStatusCode::unprocessableEntity(),
+                ValidationErrorResponse::create(),
+            ),
+            ResponseEntry::create(
+                HTTPStatusCode::ok(),
+                Response::create()->description('Resource created')
+                    ->content(
+                        ContentEntry::json(
+                            MediaType::create()->schema(PetSchema::create()),
+                        ),
+                    ),
+            ),
+            ResponseEntry::create(
+                HTTPStatusCode::forbidden(),
+                Response::create()->description('Forbidden'),
+            ),
+        );
+    }
+}

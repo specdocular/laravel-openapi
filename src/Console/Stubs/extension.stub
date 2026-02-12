@@ -1,0 +1,19 @@
+<?php
+
+namespace DummyNamespace;
+
+use Specdocular\OpenAPI\Objects\Schema;
+use Specdocular\LaravelOpenAPI\Factories\ExtensionFactory;
+
+class DummyClass extends ExtensionFactory
+{
+    public function key(): string
+    {
+        return 'DummyExtension';
+    }
+
+    public function value(): null
+    {
+        return null;
+    }
+}
