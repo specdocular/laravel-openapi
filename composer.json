@@ -27,7 +27,7 @@
         "php": "^8.2",
         "composer/class-map-generator": "^1.6",
         "laravel/framework": "^10.0|^11.0|^12.0",
-        "specdocular/php-openapi": "dev-main",
+        "specdocular/php-openapi": "^0.1.0",
         "webmozart/assert": "^1.11"
     },
     "require-dev": {
@@ -52,16 +52,6 @@
         "squizlabs/php_codesniffer": "*",
         "vimeo/psalm": "^6.0.0"
     },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/specdocular/php-openapi"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/specdocular/php-json-schema"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Specdocular\\LaravelOpenAPI\\": "src/"
