@@ -24,9 +24,9 @@
         }
     ],
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "composer/class-map-generator": "^1.6",
-        "laravel/framework": "^10.0|^11.0|^12.0",
+        "laravel/framework": "^11.0|^12.0",
         "specdocular/php-openapi": "^0.1.0",
         "webmozart/assert": "^1.11"
     },
@@ -34,10 +34,10 @@
         "friendsofphp/php-cs-fixer": "^3.8.0",
         "justinrainbow/json-schema": "^6.0",
         "larastan/larastan": "^3.0",
-        "orchestra/testbench": "^8.0|^9.0|^10.0",
-        "pestphp/pest": "^3.2",
-        "pestphp/pest-plugin-laravel": "^3.0",
-        "pestphp/pest-plugin-type-coverage": "^3.0",
+        "orchestra/testbench": "^9.0|^10.0",
+        "pestphp/pest": "^4.0",
+        "pestphp/pest-plugin-laravel": "^4.0",
+        "pestphp/pest-plugin-type-coverage": "^4.0",
         "php-standard-library/psalm-plugin": "^2.3",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
