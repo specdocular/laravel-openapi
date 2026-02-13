@@ -1,11 +1,10 @@
 # Laravel OpenAPI
 
-[![Tests](https://github.com/specdocular/laravel-openapi/actions/workflows/tests.yml/badge.svg)](https://github.com/specdocular/laravel-openapi/actions/workflows/tests.yml)
-[![Code Style](https://github.com/specdocular/laravel-openapi/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/specdocular/laravel-openapi/actions/workflows/php-cs-fixer.yml)
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/specdocular/laravel-openapi.svg)](https://packagist.org/packages/specdocular/laravel-openapi)
 [![PHP Version](https://img.shields.io/packagist/php-v/specdocular/laravel-openapi.svg)](https://packagist.org/packages/specdocular/laravel-openapi)
-[![License](https://img.shields.io/packagist/l/specdocular/laravel-openapi.svg)](https://packagist.org/packages/specdocular/laravel-openapi)
+[![Tests](https://github.com/specdocular/laravel-openapi/actions/workflows/tests.yml/badge.svg)](https://github.com/specdocular/laravel-openapi/actions/workflows/tests.yml)
 [![codecov](https://codecov.io/gh/specdocular/laravel-openapi/graph/badge.svg)](https://codecov.io/gh/specdocular/laravel-openapi)
+[![Code Style](https://github.com/specdocular/laravel-openapi/actions/workflows/php-cs-fixer.yml/badge.svg)](https://github.com/specdocular/laravel-openapi/actions/workflows/php-cs-fixer.yml)
 
 Generate [OpenAPI 3.1.x](https://spec.openapis.org/oas/v3.1.1.html) specifications for Laravel applications using a factory-based, "Laravel way" approach.
 
