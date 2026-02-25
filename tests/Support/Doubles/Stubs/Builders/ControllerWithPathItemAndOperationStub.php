@@ -2,11 +2,11 @@
 
 namespace Tests\Support\Doubles\Stubs\Builders;
 
-use Specdocular\LaravelOpenAPI\Attributes\Collection;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
 
-#[Collection('Another')]
+#[Scope('Another')]
 #[PathItem]
 class ControllerWithPathItemAndOperationStub
 {

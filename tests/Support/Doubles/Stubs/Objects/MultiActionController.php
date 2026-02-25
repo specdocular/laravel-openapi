@@ -2,13 +2,13 @@
 
 namespace Tests\Support\Doubles\Stubs\Objects;
 
-use Specdocular\LaravelOpenAPI\Attributes\Collection;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
 use Workbench\App\Petstore\Factories\Responses\SingleResponseUsingReusable;
 
 #[PathItem]
-#[Collection('example')]
+#[Scope('example')]
 class MultiActionController
 {
     #[Operation(
@@ -20,7 +20,7 @@ class MultiActionController
     }
 
     #[Operation]
-    #[Collection('another-collection')]
+    #[Scope('another-collection')]
     public function example(): void
     {
     }

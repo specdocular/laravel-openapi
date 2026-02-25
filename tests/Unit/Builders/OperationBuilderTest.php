@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Specdocular\LaravelOpenAPI\Attributes\Collection;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Extension;
 use Specdocular\LaravelOpenAPI\Attributes\Operation as OperationAttribute;
 use Specdocular\LaravelOpenAPI\Builders\OperationBuilder;
@@ -83,7 +83,7 @@ describe(class_basename(OperationBuilder::class), function (): void {
                     Route::delete('test', static fn (): string => 'test'),
                 );
                 $routeInfo = $routeInfo->withActionAttributes(collect([
-                    new Collection('test'),
+                    new Scope('test'),
                     new Extension(TestExtensionFactory::class),
                     new OperationAttribute(
                         tags: [TagWithExternalObjectDoc::class],

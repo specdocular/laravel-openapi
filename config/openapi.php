@@ -4,31 +4,31 @@ use Specdocular\LaravelOpenAPI\Factories\DefaultFactory;
 
 return [
     /*
-     * Collection configuration.
+     * Scope configuration.
      */
-    'collection' => [
+    'scope' => [
         /*
-         * The default collection configuration.
+         * The default scope configuration.
          */
         'default' => [
             /*
-             * The default collection name to use when no explicit collection is specified.
+             * The default scope name to use when no explicit scope is specified.
              */
             'name' => 'default',
 
             /*
-             * Indicates if the routes that doesn't have explicit Collection attributes
-             * should be considered under default collection or not.
+             * Indicates if the routes that doesn't have explicit Scope attributes
+             * should be considered under default scope or not.
              */
             'include_routes_without_attribute' => false,
         ],
         /*
-         * Indicates if the action-level Collection attribute should override the
-         * controller-level Collection attribute or not.
+         * Indicates if the action-level Scope attribute should override the
+         * controller-level Scope attribute or not.
          */
         'action_attribute_overrides_controller_attribute' => true,
     ],
-    'collections' => [
+    'scopes' => [
         'default' => [
             'openapi' => DefaultFactory::class,
             // Route for exposing specification.

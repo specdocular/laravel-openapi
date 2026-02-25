@@ -5,7 +5,7 @@ namespace Specdocular\LaravelOpenAPI\Support;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
-use Specdocular\LaravelOpenAPI\Attributes\Collection as CollectionAlias;
+use Specdocular\LaravelOpenAPI\Attributes\Scope as ScopeAlias;
 use Webmozart\Assert\Assert;
 
 final readonly class RouteCollector
@@ -16,24 +16,24 @@ final readonly class RouteCollector
     }
 
     /**
-     * Get all routes that should be collected for the given collection.
+     * Get all routes that should be collected for the given scope.
      *
-     * @param non-empty-string $collection
+     * @param non-empty-string $scope
      *
      * @return Collection<int, RouteInfo>
      */
-    public function whereShouldBeCollectedFor(string $collection): Collection
+    public function whereShouldBeCollectedFor(string $scope): Collection
     {
-        Assert::stringNotEmpty($collection);
+        Assert::stringNotEmpty($scope);
 
         return $this->all()->filter(
-            function (RouteInfo $routeInfo) use ($collection): bool {
-                if (config()->boolean('openapi.collection.default.include_routes_without_attribute', false)) {
-                    return (!$routeInfo->collection()->hasCollectionAttribute() && $this->generatingDefaultCollection($collection))
-                        || $routeInfo->collection()->isInCollection($collection);
+            function (RouteInfo $routeInfo) use ($scope): bool {
+                if (config()->boolean('openapi.scope.default.include_routes_without_attribute', false)) {
+                    return (!$routeInfo->scope()->hasScopeAttribute() && $this->generatingDefaultScope($scope))
+                        || $routeInfo->scope()->isInScope($scope);
                 }
 
-                return $routeInfo->collection()->isInCollection($collection);
+                return $routeInfo->scope()->isInScope($scope);
             },
         );
     }
@@ -53,8 +53,8 @@ final readonly class RouteCollector
             );
     }
 
-    private function generatingDefaultCollection(string $collection): bool
+    private function generatingDefaultScope(string $scope): bool
     {
-        return CollectionAlias::DEFAULT === $collection;
+        return ScopeAlias::DEFAULT === $scope;
     }
 }

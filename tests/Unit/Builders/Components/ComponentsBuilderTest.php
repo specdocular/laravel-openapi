@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Config;
 use Pest\Expectation;
-use Specdocular\LaravelOpenAPI\Attributes\Collection;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Builders\ComponentsBuilder\ComponentsBuilder;
 use Specdocular\OpenAPI\Schema\Objects\Components\Components;
 
@@ -41,7 +41,7 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
             ],
         ];
         Config::set('openapi', [
-            'collections' => [
+            'scopes' => [
                 'default' => [
                     'components' => $componentPaths,
                 ],
@@ -52,11 +52,11 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
         ]);
     });
 
-    it('can collect components', function (string|null $collection, array|null $expectation): void {
+    it('can collect components', function (string|null $scope, array|null $expectation): void {
         $componentsBuilder = app(ComponentsBuilder::class);
 
         /** @var Components|null $result */
-        $result = $componentsBuilder->build($collection);
+        $result = $componentsBuilder->build($scope);
 
         when(
             is_null($expectation),
@@ -73,15 +73,15 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
         );
     })->with(
         [
-            'none existing collection' => [
-                'collection' => 'unknown',
+            'none existing scope' => [
+                'scope' => 'unknown',
                 'expectation' => null,
             ],
-            'test collection' => [
-                'collection' => 'test',
+            'test scope' => [
+                'scope' => 'test',
                 'expectation' => [
                     'schemas' => [
-                        'ExplicitCollectionSchema' => [
+                        'ExplicitScopeSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -89,7 +89,7 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
                                 ],
                             ],
                         ],
-                        'MultiCollectionSchema' => [
+                        'MultiScopeSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -99,22 +99,22 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
                         ],
                     ],
                     'responses' => [
-                        'MultiCollectionResponse' => [
+                        'MultiScopeResponse' => [
                             'description' => 'OK',
                         ],
-                        'ExplicitCollectionResponse' => [
+                        'ExplicitScopeResponse' => [
                             'description' => 'OK',
                         ],
                     ],
                     'parameters' => [
-                        'MultiCollectionParameter' => [
+                        'MultiScopeParameter' => [
                             'name' => 'test',
                             'in' => 'cookie',
                             'schema' => [
                                 'type' => 'string',
                             ],
                         ],
-                        'ExplicitCollectionParameter' => [
+                        'ExplicitScopeParameter' => [
                             'name' => 'user_id',
                             'in' => 'path',
                             'schema' => [
@@ -123,62 +123,62 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
                         ],
                     ],
                     'examples' => [
-                        'MultiCollectionExample' => [
+                        'MultiScopeExample' => [
                             'value' => 'Example Value',
                         ],
-                        'ExplicitCollectionExample' => [
+                        'ExplicitScopeExample' => [
                             'value' => 'Example Value',
                         ],
                     ],
                     'requestBodies' => [
-                        'MultiCollectionRequestBody' => [
+                        'MultiScopeRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],
                         ],
-                        'ExplicitCollectionRequestBody' => [
+                        'ExplicitScopeRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],
                         ],
                     ],
                     'headers' => [
-                        'ExplicitCollectionHeader' => [],
-                        'MultiCollectionHeader' => [],
+                        'ExplicitScopeHeader' => [],
+                        'MultiScopeHeader' => [],
                     ],
                     'securitySchemes' => [
-                        'ExplicitCollectionSecurityScheme' => [
+                        'ExplicitScopeSecurityScheme' => [
                             'type' => 'http',
                             'scheme' => 'basic',
                         ],
-                        'MultiCollectionSecurityScheme' => [
+                        'MultiScopeSecurityScheme' => [
                             'type' => 'http',
                             'scheme' => 'basic',
                         ],
                     ],
                     'links' => [
-                        'MultiCollectionLink' => [],
-                        'ExplicitCollectionLink' => [],
+                        'MultiScopeLink' => [],
+                        'ExplicitScopeLink' => [],
                     ],
                     'callbacks' => [
-                        'ExplicitCollectionCallback' => [
+                        'ExplicitScopeCallback' => [
                             'https://laragen.io/explicit-collection-callback' => [],
                         ],
-                        'MultiCollectionCallback' => [
+                        'MultiScopeCallback' => [
                             'https://laragen.io/multi-collection-callback' => [],
                         ],
                     ],
                     'pathItems' => [
-                        'MultiCollectionPathItem' => [],
-                        'ExplicitCollectionPathItem' => [],
+                        'MultiScopePathItem' => [],
+                        'ExplicitScopePathItem' => [],
                     ],
                 ],
             ],
-            'explicit default collection' => [
-                'collection' => Collection::DEFAULT,
+            'explicit default scope' => [
+                'scope' => Scope::DEFAULT,
                 'expectation' => [
                     'schemas' => [
-                        'ImplicitCollectionSchema' => [
+                        'ImplicitDefaultSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -186,7 +186,7 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
                                 ],
                             ],
                         ],
-                        'MultiCollectionSchema' => [
+                        'MultiScopeSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -196,22 +196,22 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
                         ],
                     ],
                     'responses' => [
-                        'ImplicitCollectionResponse' => [
+                        'ImplicitDefaultResponse' => [
                             'description' => 'OK',
                         ],
-                        'MultiCollectionResponse' => [
+                        'MultiScopeResponse' => [
                             'description' => 'OK',
                         ],
                     ],
                     'parameters' => [
-                        'MultiCollectionParameter' => [
+                        'MultiScopeParameter' => [
                             'name' => 'test',
                             'in' => 'cookie',
                             'schema' => [
                                 'type' => 'string',
                             ],
                         ],
-                        'ImplicitCollectionParameter' => [
+                        'ImplicitDefaultParameter' => [
                             'name' => 'limit',
                             'in' => 'query',
                             'schema' => [
@@ -220,54 +220,54 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
                         ],
                     ],
                     'examples' => [
-                        'ImplicitCollectionExample' => [
+                        'ImplicitDefaultExample' => [
                             'externalValue' => 'Example External Value',
                         ],
-                        'MultiCollectionExample' => [
+                        'MultiScopeExample' => [
                             'value' => 'Example Value',
                         ],
                     ],
                     'requestBodies' => [
-                        'ImplicitCollectionRequestBody' => [
+                        'ImplicitDefaultRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],
                         ],
-                        'MultiCollectionRequestBody' => [
+                        'MultiScopeRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],
                         ],
                     ],
                     'headers' => [
-                        'MultiCollectionHeader' => [],
-                        'ImplicitCollectionHeader' => [],
+                        'MultiScopeHeader' => [],
+                        'ImplicitDefaultHeader' => [],
                     ],
                     'securitySchemes' => [
-                        'MultiCollectionSecurityScheme' => [
+                        'MultiScopeSecurityScheme' => [
                             'type' => 'http',
                             'scheme' => 'basic',
                         ],
-                        'ImplicitCollectionSecurityScheme' => [
+                        'ImplicitDefaultSecurityScheme' => [
                             'type' => 'http',
                             'scheme' => 'basic',
                         ],
                     ],
                     'links' => [
-                        'MultiCollectionLink' => [],
-                        'ImplicitCollectionLink' => [],
+                        'MultiScopeLink' => [],
+                        'ImplicitDefaultLink' => [],
                     ],
                     'callbacks' => [
                         'ImplicitDefaultCallback' => [
                             'https://laragen.io/implicit-default-callback' => [],
                         ],
-                        'MultiCollectionCallback' => [
+                        'MultiScopeCallback' => [
                             'https://laragen.io/multi-collection-callback' => [],
                         ],
                     ],
                     'pathItems' => [
-                        'MultiCollectionPathItem' => [],
-                        'ImplicitCollectionPathItem' => [],
+                        'MultiScopePathItem' => [],
+                        'ImplicitDefaultPathItem' => [],
                     ],
                 ],
             ],

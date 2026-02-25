@@ -2,7 +2,7 @@
 
 namespace Workbench\App\Petstore;
 
-use Specdocular\LaravelOpenAPI\Attributes\Collection;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
 use Workbench\App\Petstore\Factories\Responses\MultiResponseMixedWithReusable;
@@ -16,7 +16,7 @@ use Workbench\App\Petstore\Tags\AnotherPetTag;
 use Workbench\App\Petstore\Tags\PetTag;
 
 #[PathItem]
-#[Collection(Collection::DEFAULT)]
+#[Scope(Scope::DEFAULT)]
 class PetController
 {
     #[Operation(

@@ -33,7 +33,7 @@ final class RouteInfo
     /** @var \ReflectionParameter[] */
     private array $actionParameters = [];
 
-    private CollectionMatcher|null $collectionMatcher = null;
+    private ScopeMatcher|null $scopeMatcher = null;
 
     private function __construct()
     {
@@ -199,14 +199,14 @@ final class RouteInfo
     }
 
     /**
-     * Get the collection matcher for this route.
+     * Get the scope matcher for this route.
      *
-     * Use this to check collection membership:
-     * - $routeInfo->collection()->isInCollection('api')
-     * - $routeInfo->collection()->hasCollectionAttribute()
+     * Use this to check scope membership:
+     * - $routeInfo->scope()->isInScope('api')
+     * - $routeInfo->scope()->hasScopeAttribute()
      */
-    public function collection(): CollectionMatcher
+    public function scope(): ScopeMatcher
     {
-        return $this->collectionMatcher ??= new CollectionMatcher($this);
+        return $this->scopeMatcher ??= new ScopeMatcher($this);
     }
 }

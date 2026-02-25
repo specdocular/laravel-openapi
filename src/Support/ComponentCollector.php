@@ -5,7 +5,7 @@ namespace Specdocular\LaravelOpenAPI\Support;
 use Composer\ClassMapGenerator\ClassMapGenerator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Specdocular\LaravelOpenAPI\Attributes\Collection as CollectionAttribute;
+use Specdocular\LaravelOpenAPI\Attributes\Scope as ScopeAttribute;
 use Specdocular\LaravelOpenAPI\Contracts\Interface\FilterStrategy;
 
 final class ComponentCollector
@@ -16,7 +16,7 @@ final class ComponentCollector
     ) {
     }
 
-    public function collect(string $collection): Collection
+    public function collect(string $scope): Collection
     {
         $generator = new ClassMapGenerator();
         foreach ($this->paths as $path) {
@@ -25,11 +25,11 @@ final class ComponentCollector
 
         $classes = collect(array_keys($generator->getClassMap()->getMap()))
             ->sort()
-            ->filter(function (string $class) use ($collection): bool {
+            ->filter(function (string $class) use ($scope): bool {
                 $reflectionClass = new \ReflectionClass($class);
-                $attributes = $reflectionClass->getAttributes(CollectionAttribute::class);
+                $attributes = $reflectionClass->getAttributes(ScopeAttribute::class);
 
-                if (CollectionAttribute::DEFAULT === $collection && blank($attributes)) {
+                if (ScopeAttribute::DEFAULT === $scope && blank($attributes)) {
                     return true;
                 }
 
@@ -37,14 +37,14 @@ final class ComponentCollector
                     return false;
                 }
 
-                /** @var CollectionAttribute $collectionAttribute */
-                $collectionAttribute = $attributes[0]->newInstance();
-                $collections = Arr::wrap($collectionAttribute->name);
+                /** @var ScopeAttribute $scopeAttribute */
+                $scopeAttribute = $attributes[0]->newInstance();
+                $scopes = Arr::wrap($scopeAttribute->name);
 
-                return ['*'] === $collections
+                return ['*'] === $scopes
                     || in_array(
-                        $collection,
-                        when(filled($collections), $collections, []),
+                        $scope,
+                        when(filled($scopes), $scopes, []),
                         true,
                     );
             });

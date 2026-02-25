@@ -41,12 +41,12 @@ class MyAPIFactory extends OpenAPIFactory
 }
 ```
 
-### 2. Configure Collections
+### 2. Configure Scopes
 
 In `config/openapi.php`:
 
 ```php
-'collections' => [
+'scopes' => [
     'default' => [
         'openapi' => MyAPIFactory::class,
         'directories' => [
@@ -73,7 +73,7 @@ $json = json_encode($openApi, JSON_PRETTY_PRINT);
 
 - Factory-based component system (schemas, responses, request bodies, parameters)
 - Auto-discovery of factories from configured directories
-- Multi-collection support for separate API versions or modules
+- Multi-scope support for separate API versions or modules
 - Route-based generation using Laravel route attributes
 - Built on [specdocular/php-openapi](https://github.com/specdocular/php-openapi) for the OpenAPI object model
 

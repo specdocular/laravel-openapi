@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
-use Specdocular\LaravelOpenAPI\Attributes\Collection;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Factories\OpenAPIFactory;
 use Specdocular\LaravelOpenAPI\Generator;
 use Specdocular\OpenAPI\Schema\Objects\Info\Info;
@@ -10,12 +10,12 @@ use Specdocular\OpenAPI\Schema\Objects\OpenAPI\OpenAPI;
 use Tests\Support\Doubles\Stubs\Objects\MultiActionController;
 
 describe(class_basename(Generator::class), function (): void {
-    it('should generate OpenApi object', function (string $collection, array $expectation): void {
+    it('should generate OpenApi object', function (string $scope, array $expectation): void {
         Route::get('/test', [MultiActionController::class, 'anotherExample']);
         $factory = Factory::class;
 
         Config::set('openapi', [
-            'collections' => [
+            'scopes' => [
                 'default' => [
                     'openapi' => $factory,
                     'components' => [
@@ -45,21 +45,21 @@ describe(class_basename(Generator::class), function (): void {
                 ],
             ],
         ]);
-        Config::set('openapi.collection.default.include_routes_without_attribute', false);
-        $openApi = app(Generator::class)->generate($collection);
+        Config::set('openapi.scope.default.include_routes_without_attribute', false);
+        $openApi = app(Generator::class)->generate($scope);
 
         $result = $openApi->compile();
 
         expect($result['components'])->toEqual($expectation['components'])
             ->and($result['paths'])->toEqual($expectation['paths']);
     })->with([
-        'default collection' => [
-            'collection' => Collection::DEFAULT,
+        'default scope' => [
+            'scope' => Scope::DEFAULT,
             'expectation' => [
                 'paths' => [],
                 'components' => [
                     'callbacks' => [
-                        'MultiCollectionCallback' => [
+                        'MultiScopeCallback' => [
                             'https://laragen.io/multi-collection-callback' => [],
                         ],
                         'ImplicitDefaultCallback' => [
@@ -69,8 +69,8 @@ describe(class_basename(Generator::class), function (): void {
                 ],
             ],
         ],
-        'example collection' => [
-            'collection' => 'example',
+        'example scope' => [
+            'scope' => 'example',
             'expectation' => [
                 'paths' => [
                     '/test' => [
@@ -118,20 +118,20 @@ describe(class_basename(Generator::class), function (): void {
                                 ],
                             ],
                         ],
-                        'MultiCollectionResponse' => [
+                        'MultiScopeResponse' => [
                             'description' => 'OK',
                         ],
                     ],
                 ],
             ],
         ],
-        'test collection' => [
-            'collection' => 'test',
+        'test scope' => [
+            'scope' => 'test',
             'expectation' => [
                 'paths' => [],
                 'components' => [
                     'schemas' => [
-                        'ExplicitCollectionSchema' => [
+                        'ExplicitScopeSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -139,7 +139,7 @@ describe(class_basename(Generator::class), function (): void {
                                 ],
                             ],
                         ],
-                        'MultiCollectionSchema' => [
+                        'MultiScopeSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -149,12 +149,12 @@ describe(class_basename(Generator::class), function (): void {
                         ],
                     ],
                     'requestBodies' => [
-                        'MultiCollectionRequestBody' => [
+                        'MultiScopeRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],
                         ],
-                        'ExplicitCollectionRequestBody' => [
+                        'ExplicitScopeRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],

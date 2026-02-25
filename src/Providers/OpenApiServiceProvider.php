@@ -47,9 +47,9 @@ class OpenApiServiceProvider extends ServiceProvider
             __DIR__ . '/../../config/openapi.php' => config_path('openapi.php'),
         ], 'openapi-config');
 
-        // Routes can be disabled per-collection by omitting 'route.uri' in config.
+        // Routes can be disabled per-scope by omitting 'route.uri' in config.
         Route::group(['as' => 'openapi.'], static function (): void {
-            foreach (config('openapi.collections', []) as $name => $config) {
+            foreach (config('openapi.scopes', []) as $name => $config) {
                 $uri = Arr::get($config, 'route.uri');
 
                 if (!$uri) {

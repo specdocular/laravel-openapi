@@ -19,23 +19,23 @@ final readonly class Generator
     ) {
     }
 
-    public function generate(string|null $collection = Attributes\Collection::DEFAULT): OpenAPI
+    public function generate(string|null $scope = Attributes\Scope::DEFAULT): OpenAPI
     {
         /** @var class-string<OpenAPIFactory> $openApiFactory */
-        $openApiFactory = config()->string('openapi.collections.' . $collection . '.openapi');
+        $openApiFactory = config()->string('openapi.scopes.' . $scope . '.openapi');
         Assert::isAOf($openApiFactory, OpenAPIFactory::class);
 
-        if (is_null($collection)) {
+        if (is_null($scope)) {
             $routes = $this->routeCollector->all();
         } else {
-            $routes = $this->routeCollector->whereShouldBeCollectedFor($collection);
+            $routes = $this->routeCollector->whereShouldBeCollectedFor($scope);
         }
 
         $paths = $this->pathsBuilder->build($routes);
 
         $openApi = $openApiFactory::create()->paths($paths);
 
-        $components = $this->componentsBuilder->build($collection);
+        $components = $this->componentsBuilder->build($scope);
         if ($components instanceof Components) {
             return $openApi->components($components);
         }
