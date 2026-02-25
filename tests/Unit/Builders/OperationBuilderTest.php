@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Extension;
 use Specdocular\LaravelOpenAPI\Attributes\Operation as OperationAttribute;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Builders\OperationBuilder;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
 use Tests\Support\Doubles\Stubs\Attributes\TestCallbackFactory;

@@ -2,10 +2,10 @@
 
 namespace Tests\Support\Doubles\Stubs\Objects;
 
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Extension;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 
 #[PathItem(summary: 'Test path item')]
 #[Scope(['test', 'example'])]

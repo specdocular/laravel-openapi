@@ -2,9 +2,9 @@
 
 namespace Tests\Support\Doubles\Stubs\Objects;
 
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Workbench\App\Petstore\Factories\Responses\SingleResponseUsingReusable;
 
 #[PathItem]

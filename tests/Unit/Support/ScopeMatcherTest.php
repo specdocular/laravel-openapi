@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Specdocular\LaravelOpenAPI\Support\ScopeMatcher;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
+use Specdocular\LaravelOpenAPI\Support\ScopeMatcher;
 use Tests\Support\Doubles\Stubs\Objects\ControllerWithExtensions;
 
 describe(class_basename(ScopeMatcher::class), function (): void {

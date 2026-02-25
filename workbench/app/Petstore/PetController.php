@@ -2,9 +2,9 @@
 
 namespace Workbench\App\Petstore;
 
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
+use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Workbench\App\Petstore\Factories\Responses\MultiResponseMixedWithReusable;
 use Workbench\App\Petstore\Factories\Responses\SingleResponse;
 use Workbench\App\Petstore\Factories\Responses\SingleResponseUsingReusable;
