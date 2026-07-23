@@ -2,13 +2,13 @@
 
 namespace Tests\Support\Doubles\Stubs\Builders\Components\Example;
 
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
+use Specdocular\LaravelOpenAPI\Attributes\Document;
 use Specdocular\OpenAPI\Contracts\Abstract\Factories\Components\ExampleFactory;
 use Specdocular\OpenAPI\Contracts\Interface\ShouldBeReferenced;
 use Specdocular\OpenAPI\Schema\Objects\Example\Example;
 
-#[Scope(['test', Scope::DEFAULT])]
-class MultiScopeExample extends ExampleFactory implements ShouldBeReferenced
+#[Document(['test', Document::DEFAULT])]
+class MultiDocumentExample extends ExampleFactory implements ShouldBeReferenced
 {
     public function component(): Example
     {

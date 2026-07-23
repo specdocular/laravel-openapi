@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
+use Specdocular\LaravelOpenAPI\Attributes\Document;
 use Specdocular\LaravelOpenAPI\Factories\OpenAPIFactory;
 use Specdocular\LaravelOpenAPI\Generator;
 use Specdocular\OpenAPI\Schema\Objects\Info\Info;
@@ -10,12 +10,12 @@ use Specdocular\OpenAPI\Schema\Objects\OpenAPI\OpenAPI;
 use Tests\Support\Doubles\Stubs\Objects\MultiActionController;
 
 describe(class_basename(Generator::class), function (): void {
-    it('should generate OpenApi object', function (string $scope, array $expectation): void {
+    it('should generate OpenApi object', function (string $document, array $expectation): void {
         Route::get('/test', [MultiActionController::class, 'anotherExample']);
         $factory = Factory::class;
 
         Config::set('openapi', [
-            'scopes' => [
+            'documents' => [
                 'default' => [
                     'openapi' => $factory,
                     'components' => [
@@ -45,21 +45,21 @@ describe(class_basename(Generator::class), function (): void {
                 ],
             ],
         ]);
-        Config::set('openapi.scope.default.include_routes_without_attribute', false);
-        $openApi = app(Generator::class)->generate($scope);
+        Config::set('openapi.document.default.include_routes_without_attribute', false);
+        $openApi = app(Generator::class)->generate($document);
 
         $result = $openApi->compile();
 
         expect($result['components'])->toEqual($expectation['components'])
             ->and($result['paths'])->toEqual($expectation['paths']);
     })->with([
-        'default scope' => [
-            'scope' => Scope::DEFAULT,
+        'default document' => [
+            'document' => Document::DEFAULT,
             'expectation' => [
                 'paths' => [],
                 'components' => [
                     'callbacks' => [
-                        'MultiScopeCallback' => [
+                        'MultiDocumentCallback' => [
                             'https://laragen.io/multi-collection-callback' => [],
                         ],
                         'ImplicitDefaultCallback' => [
@@ -69,8 +69,8 @@ describe(class_basename(Generator::class), function (): void {
                 ],
             ],
         ],
-        'example scope' => [
-            'scope' => 'example',
+        'example document' => [
+            'document' => 'example',
             'expectation' => [
                 'paths' => [
                     '/test' => [
@@ -118,20 +118,20 @@ describe(class_basename(Generator::class), function (): void {
                                 ],
                             ],
                         ],
-                        'MultiScopeResponse' => [
+                        'MultiDocumentResponse' => [
                             'description' => 'OK',
                         ],
                     ],
                 ],
             ],
         ],
-        'test scope' => [
-            'scope' => 'test',
+        'test document' => [
+            'document' => 'test',
             'expectation' => [
                 'paths' => [],
                 'components' => [
                     'schemas' => [
-                        'ExplicitScopeSchema' => [
+                        'ExplicitDocumentSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -139,7 +139,7 @@ describe(class_basename(Generator::class), function (): void {
                                 ],
                             ],
                         ],
-                        'MultiScopeSchema' => [
+                        'MultiDocumentSchema' => [
                             'type' => 'object',
                             'properties' => [
                                 'id' => [
@@ -149,12 +149,12 @@ describe(class_basename(Generator::class), function (): void {
                         ],
                     ],
                     'requestBodies' => [
-                        'MultiScopeRequestBody' => [
+                        'MultiDocumentRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],
                         ],
-                        'ExplicitScopeRequestBody' => [
+                        'ExplicitDocumentRequestBody' => [
                             'content' => [
                                 'application/json' => [],
                             ],

@@ -33,7 +33,7 @@ final class RouteInfo
     /** @var \ReflectionParameter[] */
     private array $actionParameters = [];
 
-    private ScopeMatcher|null $scopeMatcher = null;
+    private DocumentMatcher|null $documentMatcher = null;
 
     private function __construct()
     {
@@ -199,14 +199,14 @@ final class RouteInfo
     }
 
     /**
-     * Get the scope matcher for this route.
+     * Get the document matcher for this route.
      *
-     * Use this to check scope membership:
-     * - $routeInfo->scope()->isInScope('api')
-     * - $routeInfo->scope()->hasScopeAttribute()
+     * Use this to check document membership:
+     * - $routeInfo->document()->isInDocument('api')
+     * - $routeInfo->document()->hasDocumentAttribute()
      */
-    public function scope(): ScopeMatcher
+    public function document(): DocumentMatcher
     {
-        return $this->scopeMatcher ??= new ScopeMatcher($this);
+        return $this->documentMatcher ??= new DocumentMatcher($this);
     }
 }

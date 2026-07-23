@@ -2,13 +2,13 @@
 
 namespace Tests\Support\Doubles\Stubs\Builders\Components\Header;
 
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
+use Specdocular\LaravelOpenAPI\Attributes\Document;
 use Specdocular\OpenAPI\Contracts\Abstract\Factories\Components\HeaderFactory;
 use Specdocular\OpenAPI\Contracts\Interface\ShouldBeReferenced;
 use Specdocular\OpenAPI\Schema\Objects\Header\Header;
 
-#[Scope('test')]
-class ExplicitScopeHeader extends HeaderFactory implements ShouldBeReferenced
+#[Document('test')]
+class ExplicitDocumentHeader extends HeaderFactory implements ShouldBeReferenced
 {
     public function component(): Header
     {

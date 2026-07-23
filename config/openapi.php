@@ -4,31 +4,31 @@ use Specdocular\LaravelOpenAPI\Factories\DefaultFactory;
 
 return [
     /*
-     * Scope configuration.
+     * Document configuration.
      */
-    'scope' => [
+    'document' => [
         /*
-         * The default scope configuration.
+         * The default document configuration.
          */
         'default' => [
             /*
-             * The default scope name to use when no explicit scope is specified.
+             * The default document name to use when no explicit document is specified.
              */
             'name' => 'default',
 
             /*
-             * Indicates if the routes that doesn't have explicit Scope attributes
-             * should be considered under default scope or not.
+             * Indicates if the routes that doesn't have explicit Document attributes
+             * should be considered under default document or not.
              */
             'include_routes_without_attribute' => false,
         ],
         /*
-         * Indicates if the action-level Scope attribute should override the
-         * controller-level Scope attribute or not.
+         * Indicates if the action-level Document attribute should override the
+         * controller-level Document attribute or not.
          */
         'action_attribute_overrides_controller_attribute' => true,
     ],
-    'scopes' => [
+    'documents' => [
         'default' => [
             'openapi' => DefaultFactory::class,
             // Route for exposing specification.

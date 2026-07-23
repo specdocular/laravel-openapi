@@ -2,13 +2,13 @@
 
 namespace Tests\Support\Doubles\Stubs\Objects;
 
+use Specdocular\LaravelOpenAPI\Attributes\Document;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
 
 #[PathItem]
-final class ExplicitDefaultScopeControllerAction
+final class ExplicitDefaultDocumentControllerAction
 {
-    #[Scope(Scope::DEFAULT)]
+    #[Document(Document::DEFAULT)]
     public function __invoke(): void
     {
     }

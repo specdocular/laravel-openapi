@@ -200,21 +200,21 @@ describe(class_basename(RouteInfo::class), function (): void {
         expect($routeInfo->extensionAttributes())->toHaveCount(0);
     });
 
-    it('can access scope matcher', function (): void {
+    it('can access document matcher', function (): void {
         $routeInfo = RouteInfo::create(
             Route::get('/example', [ControllerWithExtensions::class, 'withExtensions']),
         );
 
-        expect($routeInfo->scope())->toBeInstanceOf(Specdocular\LaravelOpenAPI\Support\ScopeMatcher::class);
+        expect($routeInfo->document())->toBeInstanceOf(Specdocular\LaravelOpenAPI\Support\DocumentMatcher::class);
     });
 
-    it('returns same scope matcher instance on multiple calls', function (): void {
+    it('returns same document matcher instance on multiple calls', function (): void {
         $routeInfo = RouteInfo::create(
             Route::get('/example', [ControllerWithExtensions::class, 'withExtensions']),
         );
 
-        $matcher1 = $routeInfo->scope();
-        $matcher2 = $routeInfo->scope();
+        $matcher1 = $routeInfo->document();
+        $matcher2 = $routeInfo->document();
 
         expect($matcher1)->toBe($matcher2);
     });

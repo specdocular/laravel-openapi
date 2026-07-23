@@ -5,7 +5,7 @@ namespace Specdocular\LaravelOpenAPI\Support;
 use Composer\ClassMapGenerator\ClassMapGenerator;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
-use Specdocular\LaravelOpenAPI\Attributes\Scope as ScopeAttribute;
+use Specdocular\LaravelOpenAPI\Attributes\Document as DocumentAttribute;
 use Specdocular\LaravelOpenAPI\Contracts\Interface\FilterStrategy;
 
 final class ComponentCollector
@@ -16,7 +16,7 @@ final class ComponentCollector
     ) {
     }
 
-    public function collect(string $scope): Collection
+    public function collect(string $document): Collection
     {
         $generator = new ClassMapGenerator();
         foreach ($this->paths as $path) {
@@ -25,11 +25,11 @@ final class ComponentCollector
 
         $classes = collect(array_keys($generator->getClassMap()->getMap()))
             ->sort()
-            ->filter(function (string $class) use ($scope): bool {
+            ->filter(function (string $class) use ($document): bool {
                 $reflectionClass = new \ReflectionClass($class);
-                $attributes = $reflectionClass->getAttributes(ScopeAttribute::class);
+                $attributes = $reflectionClass->getAttributes(DocumentAttribute::class);
 
-                if (ScopeAttribute::DEFAULT === $scope && blank($attributes)) {
+                if (DocumentAttribute::DEFAULT === $document && blank($attributes)) {
                     return true;
                 }
 
@@ -37,14 +37,14 @@ final class ComponentCollector
                     return false;
                 }
 
-                /** @var ScopeAttribute $scopeAttribute */
-                $scopeAttribute = $attributes[0]->newInstance();
-                $scopes = Arr::wrap($scopeAttribute->name);
+                /** @var DocumentAttribute $documentAttribute */
+                $documentAttribute = $attributes[0]->newInstance();
+                $documents = Arr::wrap($documentAttribute->name);
 
-                return ['*'] === $scopes
+                return ['*'] === $documents
                     || in_array(
-                        $scope,
-                        when(filled($scopes), $scopes, []),
+                        $document,
+                        when(filled($documents), $documents, []),
                         true,
                     );
             });

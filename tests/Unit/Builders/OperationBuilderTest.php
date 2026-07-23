@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Specdocular\LaravelOpenAPI\Attributes\Document;
 use Specdocular\LaravelOpenAPI\Attributes\Extension;
 use Specdocular\LaravelOpenAPI\Attributes\Operation as OperationAttribute;
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
 use Specdocular\LaravelOpenAPI\Builders\OperationBuilder;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
 use Tests\Support\Doubles\Stubs\Attributes\TestCallbackFactory;
@@ -83,7 +83,7 @@ describe(class_basename(OperationBuilder::class), function (): void {
                     Route::delete('test', static fn (): string => 'test'),
                 );
                 $routeInfo = $routeInfo->withActionAttributes(collect([
-                    new Scope('test'),
+                    new Document('test'),
                     new Extension(TestExtensionFactory::class),
                     new OperationAttribute(
                         tags: [TagWithExternalObjectDoc::class],

@@ -4,7 +4,7 @@ namespace Workbench\App\Documentation\Callbacks;
 
 use Specdocular\JsonSchema\Draft202012\Formats\StringFormat;
 use Specdocular\JsonSchema\Draft202012\Keywords\Properties\Property;
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
+use Specdocular\LaravelOpenAPI\Attributes\Document;
 use Specdocular\OpenAPI\Contracts\Abstract\Factories\Components\CallbackFactory;
 use Specdocular\OpenAPI\Contracts\Interface\ShouldBeReferenced;
 use Specdocular\OpenAPI\Schema\Objects\Callback\Callback;
@@ -21,9 +21,9 @@ use Specdocular\OpenAPI\Schema\Objects\Responses\Support\ResponseEntry;
 use Specdocular\OpenAPI\Schema\Objects\Schema\Schema;
 use Specdocular\OpenAPI\Support\RuntimeExpression\Request\RequestQueryExpression;
 use Specdocular\OpenAPI\Support\SharedFields\Content\ContentEntry;
-use Workbench\App\Documentation\WorkbenchScope;
+use Workbench\App\Documentation\WorkbenchDocument;
 
-#[Scope(WorkbenchScope::class)]
+#[Document(WorkbenchDocument::class)]
 class UserUpdatedCallback extends CallbackFactory implements ShouldBeReferenced
 {
     public function component(): Callback

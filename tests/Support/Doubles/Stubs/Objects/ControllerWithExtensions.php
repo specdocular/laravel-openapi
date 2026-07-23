@@ -2,19 +2,19 @@
 
 namespace Tests\Support\Doubles\Stubs\Objects;
 
+use Specdocular\LaravelOpenAPI\Attributes\Document;
 use Specdocular\LaravelOpenAPI\Attributes\Extension;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
-use Specdocular\LaravelOpenAPI\Attributes\Scope;
 
 #[PathItem(summary: 'Test path item')]
-#[Scope(['test', 'example'])]
+#[Document(['test', 'example'])]
 class ControllerWithExtensions
 {
     #[Operation(summary: 'Test operation')]
     #[Extension(key: 'x-custom', value: 'custom-value')]
     #[Extension(key: 'x-another', value: 'another-value')]
-    #[Scope('action-collection')]
+    #[Document('action-collection')]
     public function withExtensions(): void
     {
     }

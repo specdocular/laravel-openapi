@@ -5,7 +5,7 @@ namespace Specdocular\LaravelOpenAPI\Support;
 use Illuminate\Routing\Route;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Collection;
-use Specdocular\LaravelOpenAPI\Attributes\Scope as ScopeAlias;
+use Specdocular\LaravelOpenAPI\Attributes\Document as DocumentAlias;
 use Webmozart\Assert\Assert;
 
 final readonly class RouteCollector
@@ -16,24 +16,24 @@ final readonly class RouteCollector
     }
 
     /**
-     * Get all routes that should be collected for the given scope.
+     * Get all routes that should be collected for the given document.
      *
-     * @param non-empty-string $scope
+     * @param non-empty-string $document
      *
      * @return Collection<int, RouteInfo>
      */
-    public function whereShouldBeCollectedFor(string $scope): Collection
+    public function whereShouldBeCollectedFor(string $document): Collection
     {
-        Assert::stringNotEmpty($scope);
+        Assert::stringNotEmpty($document);
 
         return $this->all()->filter(
-            function (RouteInfo $routeInfo) use ($scope): bool {
-                if (config()->boolean('openapi.scope.default.include_routes_without_attribute', false)) {
-                    return (!$routeInfo->scope()->hasScopeAttribute() && $this->generatingDefaultScope($scope))
-                        || $routeInfo->scope()->isInScope($scope);
+            function (RouteInfo $routeInfo) use ($document): bool {
+                if (config()->boolean('openapi.document.default.include_routes_without_attribute', false)) {
+                    return (!$routeInfo->document()->hasDocumentAttribute() && $this->generatingDefaultDocument($document))
+                        || $routeInfo->document()->isInDocument($document);
                 }
 
-                return $routeInfo->scope()->isInScope($scope);
+                return $routeInfo->document()->isInDocument($document);
             },
         );
     }
@@ -53,8 +53,8 @@ final readonly class RouteCollector
             );
     }
 
-    private function generatingDefaultScope(string $scope): bool
+    private function generatingDefaultDocument(string $document): bool
     {
-        return ScopeAlias::DEFAULT === $scope;
+        return DocumentAlias::DEFAULT === $document;
     }
 }

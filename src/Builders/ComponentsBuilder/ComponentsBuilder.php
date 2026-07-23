@@ -24,7 +24,7 @@ final readonly class ComponentsBuilder
     ) {
     }
 
-    public function build(string $scope): Components|null
+    public function build(string $document): Components|null
     {
         $componentTypes = [
             'schemas' => SchemaFactory::class,
@@ -42,9 +42,9 @@ final readonly class ComponentsBuilder
         $collected = [];
         foreach ($componentTypes as $configKey => $factoryClass) {
             $collected[$configKey] = $this->componentCollector
-                ->in($this->getPathsFromConfig($scope, $configKey))
+                ->in($this->getPathsFromConfig($document, $configKey))
                 ->use(new ComponentFilter($factoryClass))
-                ->collect($scope);
+                ->collect($document);
         }
 
         $components = Components::create();
@@ -73,9 +73,9 @@ final readonly class ComponentsBuilder
         return $hasAnyObjects ? $components : null;
     }
 
-    private function getPathsFromConfig(string $scope, string $type): array
+    private function getPathsFromConfig(string $document, string $type): array
     {
-        $paths = config("openapi.scopes.{$scope}.components.{$type}", []);
+        $paths = config("openapi.documents.{$document}.components.{$type}", []);
 
         foreach ($paths as &$path) {
             $path = glob($path, GLOB_ONLYDIR) ?: [];

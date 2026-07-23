@@ -6,7 +6,7 @@ use Illuminate\Support\Arr;
 use Webmozart\Assert\Assert;
 
 #[\Attribute(\Attribute::TARGET_CLASS | \Attribute::TARGET_METHOD)]
-final readonly class Scope
+final readonly class Document
 {
     public const DEFAULT = 'default';
     /** @var array<non-empty-string|class-string<\Stringable>> */
@@ -21,7 +21,7 @@ final readonly class Scope
 
         Assert::allStringNotEmpty($name);
 
-        $this->name = $this->prepareScope($name);
+        $this->name = $this->prepareDocument($name);
     }
 
     /**
@@ -29,7 +29,7 @@ final readonly class Scope
      *
      * @return array<non-empty-string|class-string<\Stringable>>
      */
-    private function prepareScope(array $name): array
+    private function prepareDocument(array $name): array
     {
         return array_map(
             function (string $item): string {

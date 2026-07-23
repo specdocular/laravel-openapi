@@ -13,7 +13,7 @@ class WorkbenchServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->app['config']->set('openapi.scopes.Workbench', [
+        $this->app['config']->set('openapi.documents.Workbench', [
             'openapi' => Workbench::class,
         ]);
         config(['cors.allowed_origins' => ['*']]);
