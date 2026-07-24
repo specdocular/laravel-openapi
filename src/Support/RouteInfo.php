@@ -33,6 +33,8 @@ final class RouteInfo
     /** @var \ReflectionParameter[] */
     private array $actionParameters = [];
 
+    private string|null $injectedExplicitOperationId = null;
+
     private DocumentMatcher|null $documentMatcher = null;
 
     private function __construct()
@@ -123,6 +125,38 @@ final class RouteInfo
         $clone->uri = $uri;
 
         return $clone;
+    }
+
+    /**
+     * Returns a new RouteInfo carrying an engine-resolved explicit operationId.
+     * A docblock `@operationId` or a compat `#[Endpoint(operationId:)]` is invisible
+     * to the kernel; the engine resolves it and feeds it here so the kernel's
+     * trailing-explosion suppression treats it identically to a native attribute id
+     * (ADR 0146 #397.9e — source-neutral explicit operationId).
+     */
+    public function withExplicitOperationId(string|null $operationId): self
+    {
+        $clone = clone $this;
+        $clone->injectedExplicitOperationId = $operationId;
+
+        return $clone;
+    }
+
+    /**
+     * The developer-pinned operationId from any source: the native `#[Operation]`
+     * attribute (kernel-visible, standalone) coalesced with an engine-injected id
+     * (docblock / compat, kernel-invisible). Drives explosion suppression in
+     * PathsBuilder (ADR 0146 #397.9e).
+     */
+    public function explicitOperationId(): string|null
+    {
+        $operationAttribute = $this->operationAttribute();
+
+        if ($operationAttribute instanceof Operation && null !== $operationAttribute->operationId) {
+            return $operationAttribute->operationId;
+        }
+
+        return $this->injectedExplicitOperationId;
     }
 
     /**

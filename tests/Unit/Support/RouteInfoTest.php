@@ -6,6 +6,7 @@ use Specdocular\LaravelOpenAPI\Attributes\Extension;
 use Specdocular\LaravelOpenAPI\Attributes\Operation;
 use Specdocular\LaravelOpenAPI\Attributes\PathItem;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
+use Tests\Support\Doubles\Stubs\Builders\ControllerWithExplicitOperationIdStub;
 use Tests\Support\Doubles\Stubs\Objects\ControllerWithExtensions;
 use Tests\Support\Doubles\Stubs\Objects\InvocableController;
 use Tests\Support\Doubles\Stubs\Objects\MultiActionController;
@@ -236,5 +237,50 @@ describe(class_basename(RouteInfo::class), function (): void {
         $matcher2 = $routeInfo->document();
 
         expect($matcher1)->toBe($matcher2);
+    });
+
+    describe('explicitOperationId (source-neutral suppression signal, ADR 0146 #397.9e)', function (): void {
+        it('returns null when neither a native attribute id nor an injected id is present', function (): void {
+            $routeInfo = RouteInfo::create(
+                Route::get('/example', static fn (): string => ''),
+            );
+
+            expect($routeInfo->explicitOperationId())->toBeNull();
+        });
+
+        it('returns the native attribute operationId when present', function (): void {
+            $routeInfo = RouteInfo::create(
+                Route::get('/example', ControllerWithExplicitOperationIdStub::class),
+            );
+
+            expect($routeInfo->explicitOperationId())->toBe('fixedOperationId');
+        });
+
+        it('returns the injected id when there is no native attribute', function (): void {
+            $routeInfo = RouteInfo::create(
+                Route::get('/example', static fn (): string => ''),
+            )->withExplicitOperationId('injectedId');
+
+            expect($routeInfo->explicitOperationId())->toBe('injectedId');
+        });
+
+        it('lets the native attribute id take precedence over an injected id', function (): void {
+            $routeInfo = RouteInfo::create(
+                Route::get('/example', ControllerWithExplicitOperationIdStub::class),
+            )->withExplicitOperationId('injectedId');
+
+            expect($routeInfo->explicitOperationId())->toBe('fixedOperationId');
+        });
+
+        it('clones without mutating the original', function (): void {
+            $routeInfo = RouteInfo::create(
+                Route::get('/example', static fn (): string => ''),
+            );
+
+            $clone = $routeInfo->withExplicitOperationId('injectedId');
+
+            expect($clone->explicitOperationId())->toBe('injectedId')
+                ->and($routeInfo->explicitOperationId())->toBeNull();
+        });
     });
 })->covers(RouteInfo::class);

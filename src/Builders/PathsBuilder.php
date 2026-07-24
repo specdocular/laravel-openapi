@@ -26,7 +26,9 @@ final readonly class PathsBuilder
                 // An explicit operationId is a single developer-assigned identity that
                 // every exploded variant would duplicate (invalid OAS), so suppress
                 // trailing explosion for such routes — ADR 0146 Decision 2 amendment.
-                $explodeTrailingOptionals = is_null($routeInfo->operationAttribute()?->operationId);
+                // The signal is source-neutral: a native attribute id (kernel-visible)
+                // OR an engine-injected docblock/compat id (ADR 0146 #397.9e).
+                $explodeTrailingOptionals = is_null($routeInfo->explicitOperationId());
 
                 return collect($this->pathTemplateExpander->expand($routeInfo->uri(), $explodeTrailingOptionals))
                     ->map(static fn (string $template): RouteInfo => $routeInfo->withUri($template));
