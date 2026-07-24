@@ -113,6 +113,19 @@ final class RouteInfo
     }
 
     /**
+     * Returns a new RouteInfo projecting the same route onto the given path template.
+     * Used by PathsBuilder to expand a Laravel optional-parameter route into its
+     * OAS-legal present-prefix variants (ADR 0146).
+     */
+    public function withUri(string $uri): self
+    {
+        $clone = clone $this;
+        $clone->uri = $uri;
+
+        return $clone;
+    }
+
+    /**
      * Checks whether the route's action is a controller.
      */
     private static function isControllerAction(Route $route): bool

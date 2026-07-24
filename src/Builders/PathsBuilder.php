@@ -3,6 +3,7 @@
 namespace Specdocular\LaravelOpenAPI\Builders;
 
 use Illuminate\Support\Collection;
+use Specdocular\LaravelOpenAPI\Support\PathTemplateExpander;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
 use Specdocular\OpenAPI\Schema\Objects\Paths\Fields\Path;
 use Specdocular\OpenAPI\Schema\Objects\Paths\Paths;
@@ -11,6 +12,7 @@ final readonly class PathsBuilder
 {
     public function __construct(
         private PathItemBuilder $pathItemBuilder,
+        private PathTemplateExpander $pathTemplateExpander,
     ) {
     }
 
@@ -19,8 +21,18 @@ final readonly class PathsBuilder
      */
     public function build(Collection $routeInfo): Paths
     {
-        $paths = $routeInfo->groupBy(
-            function (RouteInfo $routeInfo): string {
+        $paths = $routeInfo->flatMap(
+            function (RouteInfo $routeInfo): Collection {
+                // An explicit operationId is a single developer-assigned identity that
+                // every exploded variant would duplicate (invalid OAS), so suppress
+                // trailing explosion for such routes — ADR 0146 Decision 2 amendment.
+                $explodeTrailingOptionals = is_null($routeInfo->operationAttribute()?->operationId);
+
+                return collect($this->pathTemplateExpander->expand($routeInfo->uri(), $explodeTrailingOptionals))
+                    ->map(static fn (string $template): RouteInfo => $routeInfo->withUri($template));
+            },
+        )->groupBy(
+            static function (RouteInfo $routeInfo): string {
                 return $routeInfo->uri();
             },
         )->map(

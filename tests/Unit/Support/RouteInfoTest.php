@@ -33,6 +33,25 @@ describe(class_basename(RouteInfo::class), function (): void {
             ->actionAttributes()->toHaveCount(0);
     });
 
+    it('preserves the raw declared uri template, optional marker intact', function (): void {
+        $routeInformation = RouteInfo::create(
+            Route::get('users/{id?}', static fn (): string => ''),
+        );
+
+        expect($routeInformation->uri())->toBe('/users/{id?}');
+    });
+
+    it('clones with a swapped uri template', function (): void {
+        $routeInformation = RouteInfo::create(
+            Route::get('users/{id?}', static fn (): string => ''),
+        );
+
+        $clone = $routeInformation->withUri('/users/{id}');
+
+        expect($clone->uri())->toBe('/users/{id}')
+            ->and($routeInformation->uri())->toBe('/users/{id?}');
+    });
+
     it('can handle unsupported http method', function (string $method): void {
         expect(
             function () use ($method): void {

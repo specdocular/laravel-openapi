@@ -112,57 +112,5 @@ describe(class_basename(ParametersBuilder::class), function (): void {
                 ],
             ],
         ],
-        'optional parameter' => [
-            '/example/{id?}',
-            [
-                [
-                    'name' => 'id',
-                    'in' => 'path',
-                    'schema' => [
-                        'type' => 'string',
-                    ],
-                ],
-            ],
-        ],
-        'mixed parameters' => [
-            '/example/{id}/{name?}',
-            [
-                [
-                    'name' => 'id',
-                    'required' => true,
-                    'in' => 'path',
-                    'schema' => [
-                        'type' => 'string',
-                    ],
-                ],
-                [
-                    'name' => 'name',
-                    'in' => 'path',
-                    'schema' => [
-                        'type' => 'string',
-                    ],
-                ],
-            ],
-        ],
-        'mixed parameters with different order' => [
-            '/example/{name?}/{id}',
-            [
-                [
-                    'name' => 'name',
-                    'in' => 'path',
-                    'schema' => [
-                        'type' => 'string',
-                    ],
-                ],
-                [
-                    'name' => 'id',
-                    'required' => true,
-                    'in' => 'path',
-                    'schema' => [
-                        'type' => 'string',
-                    ],
-                ],
-            ],
-        ],
     ]);
 })->covers(ParametersBuilder::class);

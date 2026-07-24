@@ -3,7 +3,6 @@
 namespace Specdocular\LaravelOpenAPI\Builders;
 
 use Illuminate\Support\Collection;
-use Illuminate\Support\Str;
 use Specdocular\JsonSchema\Draft202012\Contracts\JSONSchema;
 use Specdocular\LaravelOpenAPI\Contracts\Factories\ParametersFactory;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
@@ -103,8 +102,8 @@ final readonly class ParametersBuilder
             $pathParams = $pathParams->map(
                 static function (string $parameter): array {
                     return [
-                        'name' => Str::replaceLast('?', '', $parameter),
-                        'required' => !Str::endsWith($parameter, '?'),
+                        'name' => $parameter,
+                        'required' => true,
                     ];
                 },
             );
