@@ -32,6 +32,18 @@ describe(class_basename(OperationBuilder::class), function (): void {
                 $routeInfo = RouteInfo::create(
                     Route::get('test', static fn (): string => 'test'),
                 );
+
+                return [
+                    'routeInfo' => $routeInfo,
+                    'expected' => [
+                        'operationId' => 'getTest',
+                    ],
+                ];
+            },
+            function (): array {
+                $routeInfo = RouteInfo::create(
+                    Route::get('test', static fn (): string => 'test'),
+                );
                 $routeInfo = $routeInfo->withActionAttributes(collect([
                     new OperationAttribute(
                         tags: [],

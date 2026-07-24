@@ -2,6 +2,7 @@
 
 namespace Specdocular\LaravelOpenAPI\Builders;
 
+use Specdocular\LaravelOpenAPI\Support\OperationIdGenerator;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
 use Specdocular\OpenAPI\Schema\Objects\Operation\Operation;
 use Specdocular\OpenAPI\Schema\Objects\PathItem\Support\AvailableOperation;
@@ -19,6 +20,7 @@ final readonly class OperationBuilder
         private SecurityBuilder $securityBuilder,
         private ServerBuilder $serverBuilder,
         private ExtensionBuilder $extensionBuilder,
+        private OperationIdGenerator $operationIdGenerator,
     ) {
     }
 
@@ -27,15 +29,17 @@ final readonly class OperationBuilder
         $operation = Operation::create();
         $attribute = $routeInfo->operationAttribute();
 
+        $explicitOperationId = $attribute?->operationId;
+        $operation = $operation->operationId(
+            $explicitOperationId ?? $this->operationIdGenerator->generate($routeInfo),
+        );
+
         if (!is_null($attribute)) {
             if (filled($attribute->summary)) {
                 $operation = $operation->summary($attribute->summary);
             }
             if (filled($attribute->description)) {
                 $operation = $operation->description($attribute->description);
-            }
-            if (!is_null($attribute->operationId)) {
-                $operation = $operation->operationId($attribute->operationId);
             }
             if (!is_null($attribute->requestBody)) {
                 $operation = $operation->requestBody($this->requestBodyBuilder->build($attribute->requestBody));
