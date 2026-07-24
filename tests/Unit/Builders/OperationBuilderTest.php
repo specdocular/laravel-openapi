@@ -36,6 +36,7 @@ describe(class_basename(OperationBuilder::class), function (): void {
                 return [
                     'routeInfo' => $routeInfo,
                     'expected' => [
+                        'summary' => 'List test',
                         'operationId' => 'getTest',
                     ],
                 ];
@@ -59,6 +60,7 @@ describe(class_basename(OperationBuilder::class), function (): void {
                 return [
                     'routeInfo' => $routeInfo,
                     'expected' => [
+                        'summary' => 'List test',
                         'operationId' => 'test',
                     ],
                 ];

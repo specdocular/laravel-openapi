@@ -75,6 +75,7 @@ describe(class_basename(Generator::class), function (): void {
                 'paths' => [
                     '/test' => [
                         'get' => [
+                            'summary' => 'List test',
                             'operationId' => 'anotherExample',
                             'responses' => [
                                 '422' => [
