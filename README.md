@@ -46,6 +46,25 @@ class MyAPIFactory extends OpenAPIFactory
 }
 ```
 
+#### Targeting an OpenAPI version
+
+The target OAS version is a construction detail of the document, declared by the
+factory you call — not a config key. `OpenAPI::v311(...)` emits OpenAPI 3.1.1 (the
+default). To emit **OpenAPI 3.2.0**, call `OpenAPI::v320(...)` instead:
+
+```php
+    public function instance(): OpenAPI
+    {
+        return OpenAPI::v320(
+            Info::create('My API', '1.0.0')
+                ->description('API documentation'),
+        );
+    }
+```
+
+Both factories take the same `Info` and are otherwise interchangeable; the version
+lives with the document because it co-varies with how the document is built.
+
 ### 2. Configure Documents
 
 In `config/openapi.php`:
