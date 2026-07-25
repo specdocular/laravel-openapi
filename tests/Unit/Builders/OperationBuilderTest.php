@@ -201,4 +201,17 @@ describe(class_basename(OperationBuilder::class), function (): void {
             },
         ],
     );
+
+    // The builder reads the precedence rule through OperationIdGenerator::resolve, so it
+    // honours an explicit id from ANY source — not only the native attribute it used to
+    // read directly. ADR 0144 Amendment (row #751) item 3.
+    it('emits an engine-injected explicit operationId in preference to the derived one', function (): void {
+        $routeInfo = RouteInfo::create(
+            Route::get('test', static fn (): string => 'test'),
+        )->withExplicitOperationId('injectedId');
+
+        $operation = app(OperationBuilder::class)->build($routeInfo);
+
+        expect($operation)->value()->compile()->toHaveKey('operationId', 'injectedId');
+    });
 })->covers(OperationBuilder::class);

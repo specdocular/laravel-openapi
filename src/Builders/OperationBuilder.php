@@ -31,10 +31,7 @@ final readonly class OperationBuilder
         $operation = Operation::create();
         $attribute = $routeInfo->operationAttribute();
 
-        $explicitOperationId = $attribute?->operationId;
-        $operation = $operation->operationId(
-            $explicitOperationId ?? $this->operationIdGenerator->generate($routeInfo),
-        );
+        $operation = $operation->operationId($this->operationIdGenerator->resolve($routeInfo));
 
         $explicitSummary = $attribute?->summary;
         $operation = $operation->summary(
