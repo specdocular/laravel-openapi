@@ -9,7 +9,6 @@ use Specdocular\LaravelOpenAPI\Support\PathTemplateExpander;
 use Specdocular\LaravelOpenAPI\Support\RouteInfo;
 use Specdocular\OpenAPI\Schema\Objects\Paths\Fields\Path;
 use Specdocular\OpenAPI\Schema\Objects\Paths\Paths;
-use Webmozart\Assert\Assert;
 
 final readonly class PathsBuilder
 {
@@ -71,6 +70,17 @@ final readonly class PathsBuilder
      * route→(path, verb) injectivity, which the Operations map's own key assertion owns —
      * not two operations sharing an id, so they must not be reported as one here.
      *
+     * The failure is a bare throw, NOT a `Webmozart\Assert` call: `Assert::isEmpty`'s
+     * `$message` parameter is a printf FORMAT STRING (it is passed to `sprintf` with
+     * `valueToString($value)` as the argument), and the reported operationId is
+     * developer-controlled data. A `%`-bearing id therefore corrupts the message, and a
+     * `%2$s`-bearing one raises `ArgumentCountError` — an `Error`, outside this guard's
+     * documented failure type — purely as a function of the data being reported. The id is
+     * not exotic: `Str::studly` does not strip `%`, so a plain route URI can derive one.
+     * A bare throw of the same exception type is the package's idiom for a domain-message
+     * failure (see Attributes\Extension and Console\SchemaFactoryMakeCommand); the
+     * `Assert::` sites are type/contract checks on collaborators.
+     *
      * @param Collection<int, RouteInfo> $projected
      */
     private function assertDistinctOperationIds(Collection $projected): void
@@ -89,11 +99,17 @@ final readonly class PathsBuilder
             ->filter(static fn (Collection $operations): bool => $operations->count() > 1)
             ->sortKeys();
 
-        Assert::isEmpty(
-            $collisions->all(),
-            'Duplicate operationId [' . $collisions->keys()->first() . '] for operations ['
-            . $collisions->first()?->keys()->sort()->implode(', ') . ']. '
-            . 'Set a distinct #[Operation(operationId: ...)] on one of them.',
-        );
+        if ($collisions->isEmpty()) {
+            return;
+        }
+
+        /** @var Collection<string, string> $collision */
+        $collision = $collisions->first();
+
+        $message = 'Duplicate operationId [' . $collisions->keys()->first() . '] for operations ['
+            . $collision->keys()->sort()->implode(', ') . ']. '
+            . 'Set a distinct #[Operation(operationId: ...)] on one of them.';
+
+        throw new \InvalidArgumentException($message);
     }
 }

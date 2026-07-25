@@ -124,6 +124,47 @@ describe(class_basename(PathsBuilder::class), function (): void {
             ],
         ]);
 
+        // The reported id is developer-controlled data, and `Str::studly` does not strip `%`
+        // (`studly('a%b') === 'A%b'`), so a `%`-bearing id is reachable BOTH from an explicit
+        // pin and from a plain route URI. A `%2$s` sequence is the strongest case: routed
+        // through `sprintf` it raises ArgumentCountError — an Error, not an Exception — so the
+        // guard would escape its own documented failure type on legal input.
+        it('reports a %-bearing operationId verbatim, without routing it through a format string', function (): void {
+            $routes = collect([
+                RouteInfo::create(Route::get('first', static fn (): string => ''))
+                    ->withExplicitOperationId('get%2$sUsers'),
+                RouteInfo::create(Route::get('second', static fn (): string => ''))
+                    ->withExplicitOperationId('get%2$sUsers'),
+            ]);
+
+            expect(fn (): Paths => app(PathsBuilder::class)->build($routes))
+                ->toThrow(
+                    InvalidArgumentException::class,
+                    'Duplicate operationId [get%2$sUsers] for operations [GET /first, GET /second].'
+                    . ' Set a distinct #[Operation(operationId: ...)] on one of them.',
+                );
+        });
+
+        // Two INDEPENDENT collision groups in one document. `getAaa` sorts before `getZzz`
+        // but is registered SECOND, so an implementation reporting the first collision it
+        // encounters would name `getZzz` and fail here — the assertion discriminates the
+        // sortKeys() ordering, not merely the presence of a collision.
+        it('reports the alphabetically-first colliding group when a document has several', function (): void {
+            $routes = collect([
+                RouteInfo::create(Route::get('zzz-items', static fn (): string => '')),
+                RouteInfo::create(Route::get('zzz_items', static fn (): string => '')),
+                RouteInfo::create(Route::get('aaa-items', static fn (): string => '')),
+                RouteInfo::create(Route::get('aaa_items', static fn (): string => '')),
+            ]);
+
+            expect(fn (): Paths => app(PathsBuilder::class)->build($routes))
+                ->toThrow(
+                    InvalidArgumentException::class,
+                    'Duplicate operationId [getAaaItems] for operations [GET /aaa-items, GET /aaa_items].'
+                    . ' Set a distinct #[Operation(operationId: ...)] on one of them.',
+                );
+        });
+
         it('accepts a document whose operationIds are all distinct', function (): void {
             $routes = collect([
                 RouteInfo::create(Route::get('blog-posts', static fn (): string => '')),
