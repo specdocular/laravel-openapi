@@ -117,6 +117,7 @@ describe(class_basename(ComponentsBuilder::class), function (): void {
                         'ExplicitDocumentParameter' => [
                             'name' => 'user_id',
                             'in' => 'path',
+                            'required' => true,
                             'schema' => [
                                 'type' => 'string',
                             ],

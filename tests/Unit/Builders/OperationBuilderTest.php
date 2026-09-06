@@ -137,6 +137,7 @@ describe(class_basename(OperationBuilder::class), function (): void {
                             [
                                 'name' => 'param_b',
                                 'in' => 'path',
+                                'required' => true,
                                 'schema' => [
                                     'type' => 'string',
                                 ],
