@@ -56,7 +56,7 @@ describe(class_basename(Generator::class), function (): void {
         'default document' => [
             'document' => Document::DEFAULT,
             'expectation' => [
-                'paths' => [],
+                'paths' => new stdClass(),
                 'components' => [
                     'callbacks' => [
                         'MultiDocumentCallback' => [
@@ -129,7 +129,7 @@ describe(class_basename(Generator::class), function (): void {
         'test document' => [
             'document' => 'test',
             'expectation' => [
-                'paths' => [],
+                'paths' => new stdClass(),
                 'components' => [
                     'schemas' => [
                         'ExplicitDocumentSchema' => [
